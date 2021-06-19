@@ -24,7 +24,7 @@ animated value
 </template>
 
 <script>
-const request = require("request");
+// const request = require("request");
 const axios = require("axios");
 
 export default {
@@ -76,7 +76,7 @@ export default {
     };
   },
   methods: {
-    forecast(callback) {
+    forecast() {
       const options = {
         method: "GET",
         url: "https://community-open-weather-map.p.rapidapi.com/weather",
@@ -108,23 +108,34 @@ export default {
 
       // alternate keys: 83aaa47d16cf0be5067a751b7f98fb25
       // 7804e5b26265f4c75b1588a89faf4542
+
       const url =
         "http://api.weatherstack.com/current?access_key=83aaa47d16cf0be5067a751b7f98fb25&query=" +
         this.location +
         "&units=m";
-      console.log(url);
-      request({ url, json: true }, (error, { body }) => {
-        if (error) {
-          callback("Unable to connect to weather service!", undefined);
-        } else if (body.error) {
-          //   callback("Unable to find location", undefined);
-        } else {
-          this.body = body;
-          console.log(this.body);
+      axios
+        .get(url, { json: true })
+        .then((res) => {
+          console.log(res);
+          thisRef.body = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      //api call with request
+      // console.log(url);
+      // request({ url, json: true }, (error, { body }) => {
+      //   if (error) {
+      //     callback("Unable to connect to weather service!", undefined);
+      //   } else if (body.error) {
+      //     //   callback("Unable to find location", undefined);
+      //   } else {
+      //     this.body = body;
+      //     console.log(this.body);
 
-          // callback(undefined, this.res);
-        }
-      });
+      //     // callback(undefined, this.res);
+      //   }
+      // });
     },
     locationEntered(value) {
       this.location = value.replace(/\s+/g, "%20");
