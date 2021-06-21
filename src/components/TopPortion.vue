@@ -45,8 +45,8 @@ export default {
   ],
   data() {
     return {
-      weather_descriptions: this.weatherDescription,
-      is_day: this.isDay,
+      // weather_descriptions: this.weatherDescription,
+      // is_day: this.isDay,
       month: null,
       monthNum: this.localTime.slice(5, 7),
     };
@@ -373,6 +373,12 @@ export default {
     },
     animated() {
       return this.animatedState;
+    },
+    weather_descriptions() {
+      return this.weatherDescription;
+    },
+    is_day() {
+      return this.isDay;
     },
   },
   mounted: function() {

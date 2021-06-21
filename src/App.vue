@@ -77,34 +77,47 @@ export default {
   },
   methods: {
     forecast() {
-      const options = {
-        method: "GET",
-        url: "https://community-open-weather-map.p.rapidapi.com/weather",
-        params: {
-          q: "Dhaka",
-          lat: "0",
-          lon: "0",
-          // callback: "test",
-          id: "2172797",
-          lang: "null",
-          units: "metric",
-        },
-        headers: {
-          "x-rapidapi-key":
-            "8310eaa8b9msh6248ac934a9c125p113f23jsnabc21cd45808",
-          "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-        },
-      };
+      // const options = {
+      //   method: "GET",
+      //   url: "https://community-open-weather-map.p.rapidapi.com/weather",
+      //   params: {
+      //     q: "Dhaka",
+      //     lat: "0",
+      //     lon: "0",
+      //     // callback: "test",
+      //     id: "2172797",
+      //     lang: "null",
+      //     units: "metric",
+      //   },
+      //   headers: {
+      //     "x-rapidapi-key":
+      //       "8310eaa8b9msh6248ac934a9c125p113f23jsnabc21cd45808",
+      //     "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
+      //   },
+      // };
       const thisRef = this;
+      const URL =
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+        thisRef.location +
+        "&APPID=48644d9725e33dad3a0c4d70795f6619";
       axios
-        .request(options)
-        .then(function(response) {
-          console.log("description: " + response.data.weather[0].description);
-          thisRef.weatherDescription = response.data.weather[0].description;
+        .get(URL)
+        .then((res) => {
+          console.log("description: " + res.data.weather[0].description);
+          thisRef.weatherDescription = res.data.weather[0].description;
         })
-        .catch(function(error) {
-          console.error(error);
+        .catch((err) => {
+          console.error(err);
         });
+      // axios
+      //   .request(options)
+      //   .then(function(response) {
+      //     console.log("description: " + response.data.weather[0].description);
+      //     thisRef.weatherDescription = response.data.weather[0].description;
+      //   })
+      //   .catch(function(error) {
+      //     console.error(error);
+      //   });
 
       // alternate keys: 83aaa47d16cf0be5067a751b7f98fb25
       // 7804e5b26265f4c75b1588a89faf4542
