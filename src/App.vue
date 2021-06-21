@@ -4,19 +4,20 @@ animated value
   <div class="scroll-container night">
     <div class="scroll-area">
       <top-portion
-        :temperature-value="body.current.temperature"
+        :temperature-value="temperature"
         :weather-description="weatherDescription"
-        :location="body.location.name"
-        :is-day="body.current.is_day"
-        :local-time="body.location.localtime"
+        :location="name"
+        :is-day="is_day"
+        :date="date"
+        :month-num="month"
         :animated-state="animated"
       ></top-portion>
       <base-dialog v-if="inputIsInvalid === true" @close="locationEntered">
       </base-dialog>
       <bottom-portion
-        :wind-speed="body.current.wind_speed"
-        :humidity="body.current.humidity"
-        :precip="body.current.precip"
+        :wind-speed="windSpeed"
+        :humidity="humidity"
+        :pressure="pressure"
         :animated-state="animated"
       ></bottom-portion>
     </div>
@@ -24,7 +25,6 @@ animated value
 </template>
 
 <script>
-// const request = require("request");
 const axios = require("axios");
 
 export default {
@@ -32,7 +32,16 @@ export default {
     return {
       inputIsInvalid: true,
       weatherDescription: "haze",
+      temperature: "",
+      windSpeed: "",
+      humidity: "",
+      pressure: "",
+      date: "",
+      month: "",
       location: "",
+      name: "",
+      sunset: null,
+      dt: null,
       animated: false,
       body: {
         request: {
@@ -75,80 +84,41 @@ export default {
       },
     };
   },
+  computed: {
+    is_day() {
+      console.log(this.dt);
+      console.log(this.sunset);
+      console.log(this.dt > this.sunset);
+
+      return this.dt > this.sunset ? "no" : "yes";
+    },
+  },
   methods: {
     forecast() {
-      // const options = {
-      //   method: "GET",
-      //   url: "https://community-open-weather-map.p.rapidapi.com/weather",
-      //   params: {
-      //     q: "Dhaka",
-      //     lat: "0",
-      //     lon: "0",
-      //     // callback: "test",
-      //     id: "2172797",
-      //     lang: "null",
-      //     units: "metric",
-      //   },
-      //   headers: {
-      //     "x-rapidapi-key":
-      //       "8310eaa8b9msh6248ac934a9c125p113f23jsnabc21cd45808",
-      //     "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-      //   },
-      // };
       const thisRef = this;
       const URL =
         "https://api.openweathermap.org/data/2.5/weather?q=" +
         thisRef.location +
-        "&APPID=48644d9725e33dad3a0c4d70795f6619";
+        "&APPID=48644d9725e33dad3a0c4d70795f6619&units=metric";
       axios
         .get(URL)
         .then((res) => {
           console.log("description: " + res.data.weather[0].description);
           thisRef.weatherDescription = res.data.weather[0].description;
+          thisRef.temperature = Math.trunc(res.data.main.temp);
+          thisRef.windSpeed = res.data.wind.speed;
+          thisRef.humidity = res.data.main.humidity;
+          thisRef.pressure = res.data.main.pressure;
+          thisRef.sunset = res.data.sys.sunset;
+          thisRef.name = res.data.name;
+          thisRef.dt = res.data.dt;
         })
         .catch((err) => {
           console.error(err);
         });
-      // axios
-      //   .request(options)
-      //   .then(function(response) {
-      //     console.log("description: " + response.data.weather[0].description);
-      //     thisRef.weatherDescription = response.data.weather[0].description;
-      //   })
-      //   .catch(function(error) {
-      //     console.error(error);
-      //   });
-
-      // alternate keys: 83aaa47d16cf0be5067a751b7f98fb25
-      // 7804e5b26265f4c75b1588a89faf4542
-
-      const url =
-        "http://api.weatherstack.com/current?access_key=83aaa47d16cf0be5067a751b7f98fb25&query=" +
-        this.location +
-        "&units=m";
-      axios
-        .get(url, { json: true })
-        .then((res) => {
-          console.log(res);
-          thisRef.body = res.data;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      //api call with request
-      // console.log(url);
-      // request({ url, json: true }, (error, { body }) => {
-      //   if (error) {
-      //     callback("Unable to connect to weather service!", undefined);
-      //   } else if (body.error) {
-      //     //   callback("Unable to find location", undefined);
-      //   } else {
-      //     this.body = body;
-      //     console.log(this.body);
-
-      //     // callback(undefined, this.res);
-      //   }
-      // });
+      var today = new Date();
+      this.date = String(today.getDate()).padStart(2, "0");
+      this.month = String(today.getMonth() + 1).padStart(2, "0");
     },
     locationEntered(value) {
       this.location = value.replace(/\s+/g, "%20");

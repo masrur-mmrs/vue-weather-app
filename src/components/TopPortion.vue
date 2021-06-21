@@ -27,7 +27,7 @@
     <transition name="growFadeIn">
       <div class="description" v-if="animated">
         <p id="weather-description">{{ weatherDescription }}</p>
-        <p id="date">{{ localTime.slice(8, 10) }} {{ month }}</p>
+        <p id="date">{{ date }} {{ month }}</p>
       </div>
     </transition>
   </div>
@@ -41,14 +41,15 @@ export default {
     "location",
     "isDay",
     "animatedState",
-    "localTime",
+    "date",
+    "monthNum",
   ],
   data() {
     return {
       // weather_descriptions: this.weatherDescription,
       // is_day: this.isDay,
       month: null,
-      monthNum: this.localTime.slice(5, 7),
+      monthInNum: this.monthNum,
     };
   },
   methods: {
@@ -81,6 +82,7 @@ export default {
         default:
           break;
       }
+      console.log(this.month);
     },
     updateParentData() {
       this.$emit("updateAnimationState", this.animated);
@@ -381,7 +383,7 @@ export default {
       return this.isDay;
     },
   },
-  mounted: function() {
+  beforeUpdate: function() {
     this.monthPicker();
   },
 };

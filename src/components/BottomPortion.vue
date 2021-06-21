@@ -9,7 +9,11 @@
     </transition>
     <transition name="slideFadeIn">
       <div class="humidity" v-if="animated">
-        <img class="icon" src="../assets/icons/humidity.png" alt="wind icon" />
+        <img
+          class="icon"
+          src="../assets/icons/humidity.png"
+          alt="humidity icon"
+        />
         <p class="title">{{ humidity }}%</p>
         <p class="subtitle">Humidity</p>
       </div>
@@ -18,10 +22,10 @@
       <div class="precip" v-if="animated">
         <img
           class="icon"
-          src="../assets/icons/precip-icon.png"
-          alt="wind icon"
+          src="../assets/icons/pressure.png"
+          alt="pressure icon"
         />
-        <p class="title">{{ precip }}%</p>
+        <p class="title">{{ pressure }}hPa</p>
         <p class="subtitle">Precipitation</p>
       </div>
     </transition>
@@ -30,7 +34,7 @@
 
 <script>
 export default {
-  props: ["windSpeed", "humidity", "precip", "animatedState"],
+  props: ["windSpeed", "humidity", "pressure", "animatedState"],
   methods: {
     updateParentData() {
       this.$emit("updateAnimationState", this.animated);
