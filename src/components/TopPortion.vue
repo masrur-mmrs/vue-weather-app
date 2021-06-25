@@ -408,6 +408,7 @@ export default {
   flex-direction: row;
   height: 3rem;
   margin-top: 1rem;
+  align-items: center;
 }
 .icon {
   display: flex;
@@ -440,6 +441,13 @@ export default {
   align-items: center;
   filter: invert(1);
   margin-right: 1rem;
+  border-radius: 1rem;
+  height: 2rem;
+  width: 2rem;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
 }
 @keyframes growFadeIn {
   0% {
@@ -501,6 +509,66 @@ export default {
   }
   100% {
     transform: translatey(0px);
+  }
+}
+
+@-webkit-keyframes glowing {
+  0% {
+    background-color: #b20000;
+    -webkit-box-shadow: 0 0 3px #b20000;
+  }
+  50% {
+    background-color: #ff0000;
+    -webkit-box-shadow: 0 0 40px #ff0000;
+  }
+  100% {
+    background-color: #b20000;
+    -webkit-box-shadow: 0 0 3px #b20000;
+  }
+}
+
+@-moz-keyframes glowing {
+  0% {
+    background-color: #b20000;
+    -moz-box-shadow: 0 0 3px #b20000;
+  }
+  50% {
+    background-color: #ff0000;
+    -moz-box-shadow: 0 0 40px #ff0000;
+  }
+  100% {
+    background-color: #b20000;
+    -moz-box-shadow: 0 0 3px #b20000;
+  }
+}
+
+@-o-keyframes glowing {
+  0% {
+    background-color: #b20000;
+    box-shadow: 0 0 3px #b20000;
+  }
+  50% {
+    background-color: #ff0000;
+    box-shadow: 0 0 40px #ff0000;
+  }
+  100% {
+    background-color: #b20000;
+    box-shadow: 0 0 3px #b20000;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #b20000;
+    box-shadow: 0 0 3px #b20000;
+  }
+  50% {
+    background-color: #ff0000;
+    box-shadow: 0 0 40px #ff0000;
+  }
+  100% {
+    background-color: #b20000;
+    box-shadow: 0 0 3px #b20000;
   }
 }
 </style>

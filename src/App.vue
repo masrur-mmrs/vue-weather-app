@@ -1,5 +1,3 @@
-//TODO: // 1. change isInputValid value // 2. change method call // 3. change
-animated value
 <template>
   <div class="scroll-container night">
     <div class="scroll-area">
