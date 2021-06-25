@@ -9,6 +9,7 @@
         :date="date"
         :month-num="month"
         :animated-state="animated"
+        @change-location="changeLocation"
       ></top-portion>
       <base-dialog v-if="inputIsInvalid === true" @close="locationEntered">
       </base-dialog>
@@ -28,7 +29,6 @@ const axios = require("axios");
 export default {
   data() {
     return {
-      inputIsInvalid: true,
       weatherDescription: "haze",
       temperature: "",
       windSpeed: "",
@@ -41,45 +41,7 @@ export default {
       sunset: null,
       dt: null,
       animated: false,
-      body: {
-        request: {
-          type: "City",
-          query: "Dhaka, Bangladesh",
-          language: "en",
-          unit: "m",
-        },
-        location: {
-          name: "Dhaka",
-          country: "Bangladesh",
-          region: "",
-          lat: "23.723",
-          lon: "90.409",
-          timezone_id: "Asia/Dhaka",
-          localtime: "2021-06-03 14:27",
-          localtime_epoch: 1622730420,
-          utc_offset: "6.0",
-        },
-        current: {
-          observation_time: "08:27 AM",
-          temperature: 35,
-          weather_code: 116,
-          weather_icons: [
-            "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png",
-          ],
-          weather_descriptions: ["Partly cloudy"],
-          wind_speed: 12,
-          wind_degree: 199,
-          wind_dir: "SSW",
-          pressure: 1007,
-          precip: 0,
-          humidity: 53,
-          cloudcover: 47,
-          feelslike: 41,
-          uv_index: 8,
-          visibility: 10,
-          is_day: "no",
-        },
-      },
+      inputIsInvalid: true,
     };
   },
   computed: {
@@ -118,6 +80,10 @@ export default {
       this.date = String(today.getDate()).padStart(2, "0");
       this.month = String(today.getMonth() + 1).padStart(2, "0");
     },
+    changeLocation() {
+      this.animated = false;
+      this.inputIsInvalid = true;
+    },
     locationEntered(value) {
       this.location = value.replace(/\s+/g, "%20");
       console.log(this.location);
@@ -143,9 +109,6 @@ body {
   scroll-snap-align: start;
 }
 
-.day {
-  background-color: #d1d8ec;
-}
 .night {
   background-color: #000918;
   color: aliceblue;

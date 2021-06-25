@@ -4,6 +4,7 @@
       <div v-if="animated" class="location">
         <img
           id="location-icon"
+          @click="changeLocation"
           src="../assets/icons/location.svg"
           alt="location icon"
         />
@@ -46,8 +47,6 @@ export default {
   ],
   data() {
     return {
-      // weather_descriptions: this.weatherDescription,
-      // is_day: this.isDay,
       month: null,
       monthInNum: this.monthNum,
     };
@@ -86,6 +85,10 @@ export default {
     },
     updateParentData() {
       this.$emit("updateAnimationState", this.animated);
+    },
+    changeLocation() {
+      console.log("Clicked");
+      this.$emit("changeLocation");
     },
   },
   computed: {
