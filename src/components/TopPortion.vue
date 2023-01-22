@@ -15,7 +15,7 @@
       <div v-if="animated" class="icon">
         <img
           id="weather-icon"
-          :src="require('../assets/icons/' + weatherImg)"
+          :src="require('../../public/icons' + weatherImg)"
           :alt="weather_descriptions"
         />
       </div>
@@ -386,7 +386,7 @@ export default {
       return this.isDay;
     },
   },
-  beforeUpdate: function() {
+  beforeUpdate: function () {
     this.monthPicker();
   },
 };
