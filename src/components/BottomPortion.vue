@@ -2,7 +2,11 @@
   <div class="container">
     <transition name="slideFadeIn">
       <div class="wind-details" v-if="animated">
-        <img class="icon" src="../assets/icons/wind-icon.png" alt="wind icon" />
+        <img
+          class="icon"
+          src="../../public/icons/wind-icon.png"
+          alt="wind icon"
+        />
         <p class="title">{{ windSpeed }}km/h</p>
         <p class="subtitle">Wind</p>
       </div>
@@ -11,7 +15,7 @@
       <div class="humidity" v-if="animated">
         <img
           class="icon"
-          src="../assets/icons/humidity.png"
+          src="../../public/icons/humidity.png"
           alt="humidity icon"
         />
         <p class="title">{{ humidity }}%</p>
@@ -22,7 +26,7 @@
       <div class="precip" v-if="animated">
         <img
           class="icon"
-          src="../assets/icons/pressure.png"
+          src="../../public/icons/humidity.png"
           alt="pressure icon"
         />
         <p class="title">{{ pressure }}hPa</p>
